@@ -17,6 +17,8 @@ kotlin {
             isStatic = true
         }
     }
+	
+	jvm()
     
     android {
        namespace = "be.ami.maubray.brocscan.shared"
@@ -53,6 +55,7 @@ kotlin {
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
+			implementation(libs.kotlinx.datetime)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

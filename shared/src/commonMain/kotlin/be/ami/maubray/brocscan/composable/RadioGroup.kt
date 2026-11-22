@@ -1,9 +1,7 @@
 package be.ami.maubray.brocscan.composable
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
@@ -20,6 +18,7 @@ fun <T> RadioGroup(
 	selected: T,
 	onSelected: (T) -> Unit,
 	label: (T) -> String,
+	trailing: @Composable (T) -> Unit = {},
 	modifier: Modifier = Modifier,
 ) {
 	Column(modifier = modifier, ) {
@@ -28,6 +27,7 @@ fun <T> RadioGroup(
 				verticalAlignment = Alignment.CenterVertically,
 				horizontalArrangement = Arrangement.spacedBy(8.dp),
 				modifier = Modifier
+					.fillMaxWidth()
 					.clickable { onSelected(option) }
 			) {
 				RadioButton(
@@ -40,6 +40,8 @@ fun <T> RadioGroup(
 					color = MaterialTheme.colorScheme.secondary,
 					fontSize = 20.sp
 				)
+				Spacer(modifier = Modifier.weight(1f))
+				trailing(option)
 			}
 		}
 	}

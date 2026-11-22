@@ -9,7 +9,9 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import be.ami.maubray.brocscan.composable.contextSnackbar
 import be.ami.maubray.brocscan.composable.layout.DataActions
@@ -22,7 +24,7 @@ import be.ami.maubray.brocscan.style.appTypography
 
 @Composable
 @Preview
-fun App() {
+fun App(contentPadding: Dp = 0.dp) {
 	val snackbarHostState = remember { SnackbarHostState() }
 	val showSnackbar = contextSnackbar(snackbarHostState)
 	
@@ -40,15 +42,27 @@ fun App() {
 	) {
 		Scaffold(snackbarHost = { SnackbarHost(snackbarHostState) }) {
 			BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
-				val iconSize = maxHeight * 0.40f
+				val iconSize = maxHeight * 0.35f
 				
 				Column(
 					modifier = Modifier
 						.background(MaterialTheme.colorScheme.background)
-						.padding(20.dp)
-						.safeContentPadding()
+						.padding(contentPadding)
 						.fillMaxSize()
 				) {
+					Box(
+						modifier = Modifier
+							.background(Color.Black)
+							.fillMaxWidth()
+							.windowInsetsTopHeight(WindowInsets.statusBars)
+					)
+					
+					Column(
+						modifier = Modifier
+							.padding(5.dp)
+							.windowInsetsPadding(WindowInsets.safeContent.only(WindowInsetsSides.Horizontal + WindowInsetsSides.Bottom))
+							.fillMaxSize()
+					) {
 					EntryHeader(
 						entries = entries,
 						selected = entry,
@@ -85,6 +99,7 @@ fun App() {
 							onDownload = { showSnackbar("Will download data") },
 							onDelete = { showSnackbar("Will delete data") }
 						)
+					}
 					}
 				}
 			}

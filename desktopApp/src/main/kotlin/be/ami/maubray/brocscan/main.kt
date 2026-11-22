@@ -1,5 +1,6 @@
 package be.ami.maubray.brocscan
 
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 
@@ -9,6 +10,6 @@ fun main() = application {
 		onCloseRequest = ::exitApplication,
 		title = "desktop",
 	) {
-		App()
+		App(contentPadding = 20.dp)
 	}
 }

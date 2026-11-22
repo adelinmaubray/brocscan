@@ -1,24 +1,21 @@
 package be.ami.maubray.brocscan
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.twotone.CheckCircle
-import androidx.compose.material.icons.twotone.CloudDownload
-import androidx.compose.material.icons.twotone.CloudUpload
-import androidx.compose.material.icons.twotone.Delete
-import androidx.compose.material.icons.twotone.QrCodeScanner
-import androidx.compose.material3.*
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import be.ami.maubray.brocscan.composable.RadioGroup
 import be.ami.maubray.brocscan.composable.contextSnackbar
+import be.ami.maubray.brocscan.composable.layout.DataActions
+import be.ami.maubray.brocscan.composable.layout.EntryHeader
+import be.ami.maubray.brocscan.composable.layout.ManualEntry
+import be.ami.maubray.brocscan.composable.layout.QrCodeScannerIcon
 import be.ami.maubray.brocscan.model.Entry
 import be.ami.maubray.brocscan.style.appColorScheme
 import be.ami.maubray.brocscan.style.appTypography
@@ -37,9 +34,6 @@ fun App() {
 	)
 	var entry by remember { mutableStateOf(entries.first()) }
 	
-	// manual entry input
-	var verificationCode by remember { mutableStateOf("") }
-	
 	MaterialTheme(
 		colorScheme = appColorScheme,
 		typography = appTypography()
@@ -55,29 +49,14 @@ fun App() {
 						.safeContentPadding()
 						.fillMaxSize()
 				) {
-					Row(
-						horizontalArrangement = Arrangement.SpaceBetween,
-						verticalAlignment = Alignment.Top,
-						modifier = Modifier.fillMaxWidth()
-					) {
-						RadioGroup(
-							options = entries,
-							selected = entry,
-							onSelected = {
-								entry = it
-								showSnackbar("${entry.label} selected!")
-							},
-							label = { it.label }
-						)
-						Column(horizontalAlignment = Alignment.End) {
-							Text(
-								"${entry.scanned}/${entry.total}",
-								color = MaterialTheme.colorScheme.secondary,
-								fontWeight = FontWeight.SemiBold,
-								fontSize = 40.sp
-							)
+					EntryHeader(
+						entries = entries,
+						selected = entry,
+						onSelected = {
+							entry = it
+							showSnackbar("${entry.label} selected!")
 						}
-					}
+					)
 					
 					Box(
 						contentAlignment = Alignment.Center,
@@ -85,13 +64,9 @@ fun App() {
 							.weight(1f)
 							.fillMaxWidth()
 					) {
-						Icon(
-							imageVector = Icons.TwoTone.QrCodeScanner,
-							contentDescription = "Open QR Code reader",
-							tint = MaterialTheme.colorScheme.primary,
-							modifier = Modifier
-								.requiredSize(iconSize)
-								.clickable { showSnackbar("QR Code reader opened") },
+						QrCodeScannerIcon(
+							size = iconSize,
+							onClick = { showSnackbar("QR Code reader opened") }
 						)
 					}
 					
@@ -100,57 +75,16 @@ fun App() {
 						verticalAlignment = Alignment.Bottom,
 						modifier = Modifier.fillMaxWidth()
 					) {
-						Row(
-							verticalAlignment = Alignment.Bottom,
-							horizontalArrangement = Arrangement.spacedBy(8.dp),
-						) {
-							OutlinedTextField(
-								value = verificationCode,
-								onValueChange = { verificationCode = it },
-								label = { Text("n° + code") },
-								singleLine = true,
-							)
-							Icon(
-								imageVector = Icons.TwoTone.CheckCircle,
-								contentDescription = "Do manual entrance",
-								tint = MaterialTheme.colorScheme.tertiary,
-								modifier = Modifier
-									.requiredSize(50.dp)
-									.clickable {
-										showSnackbar("Will do manual entrance [$verificationCode]")
-										verificationCode = ""
-									},
-							)
-						}
-						Column(
-							horizontalAlignment = Alignment.End,
-							verticalArrangement = Arrangement.spacedBy(10.dp)
-						) {
-							Icon(
-								imageVector = Icons.TwoTone.CloudUpload,
-								contentDescription = "Upload data to device",
-								tint = MaterialTheme.colorScheme.primary,
-								modifier = Modifier
-									.requiredSize(50.dp)
-									.clickable { showSnackbar("Will upload data") },
-							)
-							Icon(
-								imageVector = Icons.TwoTone.CloudDownload,
-								contentDescription = "Download data from device or cloud",
-								tint = MaterialTheme.colorScheme.secondary,
-								modifier = Modifier
-									.requiredSize(50.dp)
-									.clickable { showSnackbar("Will download data") },
-							)
-							Icon(
-								imageVector = Icons.TwoTone.Delete,
-								contentDescription = "Delete data",
-								tint = MaterialTheme.colorScheme.error,
-								modifier = Modifier
-									.requiredSize(50.dp)
-									.clickable { showSnackbar("Will delete data") },
-							)
-						}
+						ManualEntry(
+							onSubmit = { code ->
+								showSnackbar("Will do manual entrance [$code]")
+							}
+						)
+						DataActions(
+							onUpload = { showSnackbar("Will upload data") },
+							onDownload = { showSnackbar("Will download data") },
+							onDelete = { showSnackbar("Will delete data") }
+						)
 					}
 				}
 			}

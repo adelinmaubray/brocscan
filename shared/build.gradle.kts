@@ -5,6 +5,8 @@ plugins {
     alias(libs.plugins.androidMultiplatformLibrary)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+	alias(libs.plugins.kotlinxSerialization)
+	alias(libs.plugins.sqldelight)
 }
 
 kotlin {
@@ -42,21 +44,27 @@ kotlin {
     }
     
     sourceSets {
-        androidMain.dependencies {
-            implementation(libs.compose.uiToolingPreview)
-            implementation(libs.compose.uiTooling)
-        }
-        commonMain.dependencies {
-            implementation(libs.compose.runtime)
-            implementation(libs.compose.foundation)
-            implementation(libs.compose.material3)
-            implementation(libs.compose.ui)
-            implementation(libs.compose.components.resources)
-            implementation(libs.compose.uiToolingPreview)
-            implementation(libs.androidx.lifecycle.viewmodelCompose)
-            implementation(libs.androidx.lifecycle.runtimeCompose)
+		commonMain.dependencies {
+			implementation(libs.compose.runtime)
+			implementation(libs.compose.foundation)
+			implementation(libs.compose.material3)
+			implementation(libs.compose.materialIconsExtended)
+			implementation(libs.compose.ui)
+			implementation(libs.compose.components.resources)
+			implementation(libs.compose.uiToolingPreview)
+			implementation(libs.androidx.lifecycle.viewmodelCompose)
+			implementation(libs.androidx.lifecycle.runtimeCompose)
 			implementation(libs.kotlinx.datetime)
-        }
+			implementation(libs.sqldelight.runtime)
+		}
+		androidMain.dependencies {
+			implementation(libs.compose.uiToolingPreview)
+			implementation(libs.compose.uiTooling)
+			implementation(libs.sqldelight.android.driver)
+		}
+		iosMain.dependencies {
+			implementation(libs.sqldelight.native.driver)
+		}
         commonTest.dependencies {
             implementation(libs.kotlin.test)
         }
@@ -66,3 +74,11 @@ kotlin {
 dependencies {
     androidRuntimeClasspath(libs.compose.uiTooling)
 }
+
+//sqldelight {
+//	databases {
+//		create("AppDatabase") {
+//			packageName.set("be.ami.maubray.brocscan.space_tutorial.cache")
+//		}
+//	}
+//}

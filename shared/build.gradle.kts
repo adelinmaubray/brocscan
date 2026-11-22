@@ -75,10 +75,10 @@ dependencies {
     androidRuntimeClasspath(libs.compose.uiTooling)
 }
 
-//sqldelight {
-//	databases {
-//		create("AppDatabase") {
-//			packageName.set("be.ami.maubray.brocscan.space_tutorial.cache")
-//		}
-//	}
-//}
+sqldelight {
+	databases {
+		create("AppDatabase") {
+			packageName.set("be.ami.maubray.brocscan.space_tutorial.cache")
+		}
+	}
+}

@@ -63,43 +63,43 @@ fun App(contentPadding: Dp = 0.dp) {
 							.windowInsetsPadding(WindowInsets.safeContent.only(WindowInsetsSides.Horizontal + WindowInsetsSides.Bottom))
 							.fillMaxSize()
 					) {
-					EntryHeader(
-						entries = entries,
-						selected = entry,
-						onSelected = {
-							entry = it
-							showSnackbar("${entry.label} selected!")
-						}
-					)
-					
-					Box(
-						contentAlignment = Alignment.Center,
-						modifier = Modifier
-							.weight(1f)
-							.fillMaxWidth()
-					) {
-						QrCodeScannerIcon(
-							size = iconSize,
-							onClick = { showSnackbar("QR Code reader opened") }
-						)
-					}
-					
-					Row(
-						horizontalArrangement = Arrangement.SpaceBetween,
-						verticalAlignment = Alignment.Bottom,
-						modifier = Modifier.fillMaxWidth()
-					) {
-						ManualEntry(
-							onSubmit = { code ->
-								showSnackbar("Will do manual entrance [$code]")
+						EntryHeader(
+							entries = entries,
+							selected = entry,
+							onSelected = {
+								entry = it
+								showSnackbar("${entry.label} selected!")
 							}
 						)
-						DataActions(
-							onUpload = { showSnackbar("Will upload data") },
-							onDownload = { showSnackbar("Will download data") },
-							onDelete = { showSnackbar("Will delete data") }
-						)
-					}
+						
+						Box(
+							contentAlignment = Alignment.Center,
+							modifier = Modifier
+								.weight(1f)
+								.fillMaxWidth()
+						) {
+							QrCodeScannerIcon(
+								size = iconSize,
+								onClick = { showSnackbar("QR Code reader opened") }
+							)
+						}
+						
+						Row(
+							horizontalArrangement = Arrangement.SpaceBetween,
+							verticalAlignment = Alignment.Bottom,
+							modifier = Modifier.fillMaxWidth()
+						) {
+							ManualEntry(
+								onSubmit = { code ->
+									showSnackbar("Will do manual entrance [$code]")
+								}
+							)
+							DataActions(
+								onUpload = { showSnackbar("Will upload data") },
+								onDownload = { showSnackbar("Will download data") },
+								onDelete = { showSnackbar("Will delete data") }
+							)
+						}
 					}
 				}
 			}

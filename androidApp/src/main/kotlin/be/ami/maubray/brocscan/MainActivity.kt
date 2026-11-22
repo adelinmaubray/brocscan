@@ -15,6 +15,7 @@ class MainActivity : ComponentActivity() {
             statusBarStyle = SystemBarStyle.dark(Color.BLACK)
         )
         super.onCreate(savedInstanceState)
+        AndroidVibratorContext.applicationContext = applicationContext
 
         setContent {
             App()

@@ -10,5 +10,14 @@
     <array>
         <string>BalooChettan2-Regular.ttf</string>
     </array>
+	<key>UILaunchScreen</key>
+	<dict>
+		<key>UIColorName</key>
+		<string>LaunchBackground</string>
+		<key>UIImageName</key>
+		<string>LaunchLogo</string>
+		<key>UIImageRespectSafeAreaInsets</key>
+		<true/>
+	</dict>
 </dict>
 </plist>

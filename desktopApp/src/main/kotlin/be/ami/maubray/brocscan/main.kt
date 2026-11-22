@@ -8,7 +8,7 @@ fun main() = application {
 	Window(
 		alwaysOnTop = true,
 		onCloseRequest = ::exitApplication,
-		title = "desktop",
+		title = "Brocscan",
 	) {
 		App(contentPadding = 20.dp)
 	}

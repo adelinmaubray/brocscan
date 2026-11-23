@@ -12,6 +12,7 @@ dependencies {
 	implementation(compose.desktop.currentOs)
 	
 	implementation(libs.compose.uiToolingPreview)
+	implementation(libs.slf4j.nop)
 }
 
 compose.desktop {

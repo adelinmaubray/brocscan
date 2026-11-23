@@ -56,6 +56,7 @@ kotlin {
 			implementation(libs.androidx.lifecycle.runtimeCompose)
 			implementation(libs.kotlinx.datetime)
 			implementation(libs.sqldelight.runtime)
+			api(libs.filekit.dialogs.compose)
 		}
 		androidMain.dependencies {
 			implementation(libs.compose.uiToolingPreview)

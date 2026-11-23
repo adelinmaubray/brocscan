@@ -27,7 +27,7 @@ fun DataActions(
 	) {
 		Icon(
 			imageVector = Icons.TwoTone.CloudDownload,
-			contentDescription = "Download data from device or",
+			contentDescription = "Download data from device or cloud",
 			tint = MaterialTheme.colorScheme.primary,
 			modifier = Modifier
 				.requiredSize(50.dp)

@@ -14,6 +14,9 @@ import be.ami.maubray.brocscan.composable.layout.*
 import be.ami.maubray.brocscan.model.Entry
 import be.ami.maubray.brocscan.style.appColorScheme
 import be.ami.maubray.brocscan.style.appTypography
+import io.github.vinceglb.filekit.dialogs.FileKitType
+import io.github.vinceglb.filekit.dialogs.compose.rememberFilePickerLauncher
+import io.github.vinceglb.filekit.name
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -21,6 +24,12 @@ import be.ami.maubray.brocscan.style.appTypography
 fun App(contentPadding: Dp = 0.dp) {
 	val snackbarHostState = remember { SnackbarHostState() }
 	val showSnackbar = contextSnackbar(snackbarHostState)
+	val downloadLauncher = rememberFilePickerLauncher(
+		type = FileKitType.File(extensions = listOf("txt")),
+		onError = { failure -> showSnackbar("Download failed: ${failure.message}") }
+	) { file ->
+		if (file != null) showSnackbar("${file.name} selected")
+	}
 	
 	// entries radio button
 	val entries = listOf(
@@ -86,7 +95,7 @@ fun App(contentPadding: Dp = 0.dp) {
 							)
 							DataActions(
 								onUpload = { showSnackbar("Will upload data") },
-								onDownload = { showSnackbar("Will download data") },
+								onDownload = { downloadLauncher.launch() },
 								onDelete = { showSnackbar("Will delete data") }
 							)
 						}

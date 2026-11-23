@@ -2,26 +2,20 @@ package be.ami.maubray.brocscan
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import be.ami.maubray.brocscan.composable.contextSnackbar
-import be.ami.maubray.brocscan.composable.layout.DataActions
-import be.ami.maubray.brocscan.composable.layout.EntryHeader
-import be.ami.maubray.brocscan.composable.layout.ManualEntry
-import be.ami.maubray.brocscan.composable.layout.QrCodeScannerIcon
+import be.ami.maubray.brocscan.composable.layout.*
 import be.ami.maubray.brocscan.model.Entry
 import be.ami.maubray.brocscan.style.appColorScheme
 import be.ami.maubray.brocscan.style.appTypography
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 @Preview
 fun App(contentPadding: Dp = 0.dp) {
@@ -40,8 +34,11 @@ fun App(contentPadding: Dp = 0.dp) {
 		colorScheme = appColorScheme,
 		typography = appTypography()
 	) {
-		Scaffold(snackbarHost = { SnackbarHost(snackbarHostState) }) {
-			BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
+		Scaffold(
+			topBar = { appTopBar() },
+			snackbarHost = { SnackbarHost(snackbarHostState) }
+		) { paddingValues ->
+			BoxWithConstraints(modifier = Modifier.padding(paddingValues).fillMaxSize()) {
 				val iconSize = maxHeight * 0.35f
 				
 				Column(
@@ -50,13 +47,6 @@ fun App(contentPadding: Dp = 0.dp) {
 						.padding(contentPadding)
 						.fillMaxSize()
 				) {
-					Box(
-						modifier = Modifier
-							.background(Color.Black)
-							.fillMaxWidth()
-							.windowInsetsTopHeight(WindowInsets.statusBars)
-					)
-					
 					Column(
 						modifier = Modifier
 							.padding(5.dp)

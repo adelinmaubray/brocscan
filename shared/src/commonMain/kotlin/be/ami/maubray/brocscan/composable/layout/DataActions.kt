@@ -26,20 +26,20 @@ fun DataActions(
 		verticalArrangement = Arrangement.spacedBy(10.dp)
 	) {
 		Icon(
-			imageVector = Icons.TwoTone.CloudUpload,
-			contentDescription = "Upload data to device",
+			imageVector = Icons.TwoTone.CloudDownload,
+			contentDescription = "Download data from device or",
 			tint = MaterialTheme.colorScheme.primary,
 			modifier = Modifier
 				.requiredSize(50.dp)
-				.clickable { onUpload() },
+				.clickable { onDownload() },
 		)
 		Icon(
-			imageVector = Icons.TwoTone.CloudDownload,
-			contentDescription = "Download data from device or cloud",
+			imageVector = Icons.TwoTone.CloudUpload,
+			contentDescription = "Upload data to device",
 			tint = MaterialTheme.colorScheme.secondary,
 			modifier = Modifier
 				.requiredSize(50.dp)
-				.clickable { onDownload() },
+				.clickable { onUpload() },
 		)
 		Icon(
 			imageVector = Icons.TwoTone.Delete,
